@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Siswa;
 
-class SiswaController extends Controller
+use App\Models\Book;
+
+class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /* Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $table = Siswa::all();
+        $table = Book::all();
 
         //return $data;
         return response()->json([
@@ -23,8 +23,7 @@ class SiswaController extends Controller
         ], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /* Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,43 +32,42 @@ class SiswaController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
+    /* Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // $table = Siswa::create([
+        // $table = Book::create([
         //     "name" => $request->name,
         //     "gender" => $request->gender,
-        //     "age" => $request->age,
+        //     "age" => $request->age
         // ]);
 
-        $table = new Siswa();
-        $table->name = $request->name;
-        $table->gender = $request->gender;
-        $table->age = $request->age;
+        $table = new Book();
+        $table->title = $request->title;
+        $table->description = $request->description;
+        $table->author = $request->author;
+        $table->publisher = $request->publisher;
+        $table->date_of_issue = $request->date_of_issue;
         $table->save();
-        
-        return $table; 
 
+        //return $table
         return response()->json([
             "message" => "Store success",
             "data" => $table
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
+    /* Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $table = Siswa::find($id);
+        $table = Book::find($id);
         if($table){
             return $table;
         }else{
@@ -77,8 +75,7 @@ class SiswaController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
+    /* Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -88,8 +85,7 @@ class SiswaController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
+    /* Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -97,11 +93,13 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $table = Siswa::find($id);
+        $table = Book::find($id);
         if($table){
-            $table->name = $request->name ? $request->name : $table->name;
-            $table->gender = $request->gender ? $request->gender : $table->gender;
-            $table->age = $request->age ? $request->age : $table->age;
+            $table->title = $request->title ? $request-> title : $table->title;
+            $table->description = $request->description ? $request->description : $table->gender;
+            $table->author = $request->author ? $request->author : $table->author;
+            $table->publisher = $request->publisher ? $request->publisher : $table->publisher;
+            $table->date_of_issue = $request->date_of_issue ? $request->date_of_issue : $table->author;
             $table->save();
 
             return $table;
@@ -118,12 +116,12 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        $table = siswa::find($id);
+        $table = Book::find($id);
         if($table){
             $table->delete();
-            return ["message" => "Delete success"];
+            return ["message" => "Delete succes"];
         }else{
-            return ["message" => "Data not found"];
+            return["message" => "Data not found"];
         }
     }
 }
